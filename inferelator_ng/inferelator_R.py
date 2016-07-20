@@ -1,5 +1,6 @@
 """
-Utility for invoking R inferelator implementaion.
+Utility for invoking R inferelator implementation.
+Only one run at a time is permitted.
 """
 
 import os
@@ -12,6 +13,7 @@ def run_inferelator_R(job_name="dream4_simplified.R"):
     root_path = utils.local_path("..", "Inferelator")
     job_path = utils.local_path("..", "Inferelator", "jobs", job_name)
     output_path = utils.local_path("..", "Inferelator", "output")
-    shutil.rmtree(output_path)
+    if os.path.exists(output_path):
+        shutil.rmtree(output_path)
     os.chdir(root_path)
     return utils.call_subprocess("Rscript", INFERELATOR_R, job_path)
