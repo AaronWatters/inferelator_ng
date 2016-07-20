@@ -28,11 +28,15 @@ def call_R(driver_path):
     Run an "R" script in a subprocess.
     Any outputs of the script should be saved to files.
     """
+    return call_subprocess('R', '-f', driver_path)
+
+def call_subprocess(*command_line):
     if os.name == "posix":
-        command = "R -f " + driver_path
+        #command = "R -f " + driver_path
+        command = " ".join(command_line)
         return subprocess.check_output(command, shell=True)
     else:
-        theproc = subprocess.Popen(['R', '-f', driver_path])
+        theproc = subprocess.Popen(command_line)
         return theproc.communicate()
 
 
