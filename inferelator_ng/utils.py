@@ -61,7 +61,7 @@ class RDriver:
 
 def local_path(*location):
     "Return location relative to the folder containing this module."
-    return r_path(os.path.join(my_dir, *location))
+    return r_path(os.path.abspath(os.path.join(my_dir, *location)))
 
 
 def df_from_tsv(file_like):
