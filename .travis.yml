@@ -33,6 +33,7 @@ after_success:
   - codecov
 after_failure:
   - pwd
+  - which Rscript
   - find .
   - cat ./inferelator_ng/tests/artifacts/run_mi.R
   - R -f ./inferelator_ng/tests/artifacts/run_mi.R
