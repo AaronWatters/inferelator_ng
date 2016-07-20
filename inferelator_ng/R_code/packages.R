@@ -2,3 +2,4 @@
 
 install.packages('inline', repos='http://cran.us.r-project.org')
 install.packages('parallel', repos='http://cran.us.r-project.org')
+install.packages('ggplot2', repos='http://cran.us.r-project.org')
