@@ -65,9 +65,9 @@ PARS$prior.weight <- 1
 PARS$use.tfa <- FALSE
 PARS$prior.ss <- FALSE
 
-PARS$output.summary <- TRUE
-PARS$output.report <- TRUE
-PARS$output.tf.plots <- TRUE
+PARS$output.summary <- FALSE
+PARS$output.report <- FALSE
+PARS$output.tf.plots <- FALSE
 
 
 # some of the elastic net parameters that are essentially constants;
