@@ -20,7 +20,7 @@ source('R_scripts/evaluate.R')
 source('R_scripts/tfa.R')
 source('R_scripts/group_predictors.R')
 source('R_scripts/summarize_results.R')
-source('R_scripts/vis_tfs_and_targets.R')
+#source('R_scripts/vis_tfs_and_targets.R')
 
 
 date.time.str <- format(Sys.time(), "%Y-%m-%d_%H-%M-%S")
@@ -429,16 +429,16 @@ PROCTIME <- proc.time() - start.proc.time
 save(PARS, IN, SEED, PROCTIME, file = paste(PARS$save.to.dir, "/params_and_input.RData", sep=""))
 
 # generate network report and visualize TFs and targets
-source('R_scripts/net_report_new.R')
-Sys.sleep(2)
-for (ccf in list.files(PARS$save.to.dir, pattern='combinedconf_*', full.names=TRUE)) {
-  if (PARS$output.report) {
-    net.report(normalizePath(ccf))
-  }
-  if (PARS$output.tf.plots) {
-    vis.tfs.and.targets(normalizePath(ccf), CORES=PARS$cores/2)
-  }
-}
+#source('R_scripts/net_report_new.R')
+#Sys.sleep(2)
+#for (ccf in list.files(PARS$save.to.dir, pattern='combinedconf_*', full.names=TRUE)) {
+#  if (PARS$output.report) {
+#    net.report(normalizePath(ccf))
+#  }
+#  if (PARS$output.tf.plots) {
+#    vis.tfs.and.targets(normalizePath(ccf), CORES=PARS$cores/2)
+#  }
+#}
 
 # this part does not work for grouped predictors
 #if (!is.null(IN$gs.mat)) {
