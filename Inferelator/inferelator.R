@@ -353,10 +353,12 @@ for (prior.name in names(IN$priors)) {
     #X <- IN$final_design_matrix[, IN$bs.pi[bootstrap, ]]
     X <- gp.out.bs$des.mat[, IN$bs.pi[bootstrap, ]]
     Y <- IN$final_response_matrix[, IN$bs.pi[bootstrap, ]]
+
     write.table(as.matrix(X), 
       paste(PARS$save.to.dir, "/X_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
     write.table(as.matrix(Y), 
       paste(PARS$save.to.dir, "/Y_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
+
     if (nrow(X) > 6000) {
       #X <- X[IN$tf.names, ]  # speeds up MI calculation for large datasets
       X <- X[gp.out.bs$tf.names, ]
@@ -373,6 +375,8 @@ for (prior.name in names(IN$priors)) {
     cat("Calculating Background MI\n")
     Ms_bg <- mi(t(X), t(X), nbins=PARS$mi.bins, cpu.n=PARS$cores)
     diag(Ms_bg) <- 0
+    write.table(as.matrix(X), 
+      paste(PARS$save.to.dir, "/Ms_bg_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
     
     # get CLR matrix
     cat("Calculating CLR Matrix\n")
