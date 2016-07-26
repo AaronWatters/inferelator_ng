@@ -375,7 +375,7 @@ for (prior.name in names(IN$priors)) {
     cat("Calculating Background MI\n")
     Ms_bg <- mi(t(X), t(X), nbins=PARS$mi.bins, cpu.n=PARS$cores)
     diag(Ms_bg) <- 0
-    write.table(as.matrix(X), 
+    write.table(as.matrix(Ms_bg), 
       paste(PARS$save.to.dir, "/Ms_bg_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
     
     # get CLR matrix
@@ -385,6 +385,9 @@ for (prior.name in names(IN$priors)) {
     #clr.mat <- clr.mat[, IN$tf.names]
     clr.mat <- clr.mat[, gp.out.bs$tf.names]
     
+    write.table(as.matrix(clr.mat), 
+      paste(PARS$save.to.dir, "/CLR_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
+
     # DREAM8 induced change:
     #for (tf1 in IN$tf.names) {
     #  for (tf2 in IN$tf.names) {
