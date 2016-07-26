@@ -5,9 +5,9 @@ from .. import inferelator_R
 
 class TestDreamSimple(unittest.TestCase):
 
-    def test_simplified_run(self):
+    def test_simplified_run(self, parameters="dream4_simplified.R"):
         "execute: Rscript inferelator.R jobs/dream4_simplified.R"
-        output_path = inferelator_R.run_inferelator_R("dream4_simplified.R")
+        output_path = inferelator_R.run_inferelator_R(parameters)
         # check that the output directory was created
         assert os.path.exists(output_path)
         # check that subdirectory exists
@@ -23,3 +23,6 @@ class TestDreamSimple(unittest.TestCase):
             matches = glob.glob(glob_path)
             self.assertEqual(len(matches), count, 
                 "did not find matches " + repr((glob_path, count, matches)))
+
+    def test_simplified_with_TFA(self):
+        return self.test_simplified_run("dream4_usetfa_simplified.R")
