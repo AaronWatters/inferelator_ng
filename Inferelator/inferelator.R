@@ -221,7 +221,7 @@ if (PARS$num.boots == 1) {
 
 write.table(as.matrix(IN$bs.pi), 
     paste(PARS$save.to.dir, "/bootstrap_pi.tsv", sep=""), sep = '\t')
-    
+
 #IN$bs.prior.rm <- list()
 #if (PARS$num.boots == 1) {
 #  IN$bs.prior.rm[[1]] <- c()
@@ -245,6 +245,10 @@ if(PARS$use.tfa) {
                                  PARS$delT.max, PARS$tau/2)
 
   IN$final_response_matrix_halftau <- des.res$final_response_matrix
+
+  write.table(as.matrix(des.res$final_response_matrix), 
+    paste(PARS$save.to.dir, "/final_response_matrix_halftau.tsv", sep=""), sep = '\t')
+
   cat("done.\n")
 }
 
