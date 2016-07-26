@@ -218,6 +218,10 @@ if (PARS$num.boots == 1) {
     IN$bs.pi[bootstrap, ] <- resp.idx[1, sample(ncol(resp.idx), replace=TRUE)]
   }
 }
+
+write.table(as.matrix(IN$bs.pi), 
+    paste(PARS$save.to.dir, "/bootstrap_pi.tsv", sep=""), sep = '\t')
+    
 #IN$bs.prior.rm <- list()
 #if (PARS$num.boots == 1) {
 #  IN$bs.prior.rm[[1]] <- c()
