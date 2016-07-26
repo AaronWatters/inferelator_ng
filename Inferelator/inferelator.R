@@ -171,6 +171,12 @@ des.res <- design.and.response(IN$meta.data, IN$exp.mat, PARS$delT.min,
 IN$final_response_matrix <- des.res$final_response_matrix
 IN$final_design_matrix <- des.res$final_design_matrix
 resp.idx <- des.res$resp.idx
+
+write.table(as.matrix(IN$final_response_matrix), 
+  paste(PARS$save.to.dir, "/final_response_matrix.tsv", sep=""), sep = '\t')
+write.table(as.matrix(IN$final_design_matrix), 
+  paste(PARS$save.to.dir, "/final_design_matrix.tsv", sep=""), sep = '\t')
+
 cat("done.\n")
                                 
 if (!all(apply(resp.idx, 1, identical, resp.idx[1,]))) {

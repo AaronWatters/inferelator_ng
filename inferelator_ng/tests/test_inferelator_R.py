@@ -6,6 +6,7 @@ from .. import inferelator_R
 class TestDreamSimple(unittest.TestCase):
 
     def test_simplified_run(self):
+        "execute: Rscript inferelator.R jobs/dream4_simplified.R"
         output_path = inferelator_R.run_inferelator_R("dream4_simplified.R")
         # check that the output directory was created
         assert os.path.exists(output_path)
