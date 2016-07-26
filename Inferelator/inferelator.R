@@ -195,6 +195,12 @@ IN$priors <- getPriors(IN$exp.mat, IN$tf.names, IN$priors.mat, IN$gs.mat,
                        PARS$eval.on.subset, PARS$job.seed, PARS$perc.tp,
                        PARS$perm.tp, PARS$perc.fp, PARS$perm.fp, 
                        PARS$pr.sel.mode)
+
+for (ii in 1:length(IN$priors)) {
+  thisprior <- IN$priors[[ii]]
+  write.table(as.matrix(thisprior), 
+    paste(PARS$save.to.dir, "/prior", ii, ".tsv", sep=""), sep = '\t')
+}
 cat("done.\n")
 
 
