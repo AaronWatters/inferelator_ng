@@ -266,6 +266,10 @@ for (prior.name in names(IN$priors)) {
   # estimate transcription factor activities
   if(PARS$use.tfa) {
     prior.tf.activities <- tfa(prior, IN$final_design_matrix, IN$final_response_matrix_halftau)
+
+    write.table(as.matrix(prior.tf.activities), 
+      paste(PARS$save.to.dir, "/activities_", prior.name, ".tsv", sep=""), sep = '\t')
+  
     IN$tf.activities[[prior.name]] <- prior.tf.activities
   }
   
