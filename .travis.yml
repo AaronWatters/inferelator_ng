@@ -26,6 +26,7 @@ install:
   # install R components
   - sudo R -f inferelator_ng/R_code/packages.R
 script:
+  - export TRAVIS_TESTING=noninteractive
   - python -c "import os; print(repr(os.name))"
   - coverage run --source=inferelator_ng setup.py test
   #- nosetests
