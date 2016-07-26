@@ -298,36 +298,37 @@ for (prior.name in names(IN$priors)) {
     # set to FALSE to disable the next block
     not.done <- PARS$prior.ss
     gp.out.bs <- gp.out
-    while (not.done) {
-      not.done <- FALSE
-      
-      # set some of the prior interactions to zero
-      prior <- gp.out$prior.mat
-      to.zero <- setdiff(1:length(prior), sample(length(prior), replace=TRUE))
-      cat(sprintf('Setting %d non-zero prior edges to zero\n', sum(prior[to.zero] != 0)))
-      prior[to.zero] <- 0
-      
-      # estimate transcription factor activities
-      if(PARS$use.tfa) {
-        des.mat <- rbind(IN$final_design_matrix, group.expression(gp.out$pred.groups, IN$final_design_matrix))
-        IN$tf.activities.bs[[prior.name]][[bootstrap]] <- tfa(prior, des.mat, IN$final_response_matrix_halftau)
-      }
-      
-      des.mat <- IN$final_design_matrix[IN$tf.with.expr, ]
-      if(PARS$use.tfa) {
-          des.mat <- IN$tf.activities.bs[[prior.name]][[bootstrap]][gp.out$tf.names, ]
-      }
-      
-      # group again? what if we group groups?
-      #cat("group predictors\n")
-      #gp.out.bs <- group.predictors(des.mat, prior, IN$gs.mat, IN$bs.pi, cor.th=0.99, grp.pre='pred.group.bs.')
-      gp.out.bs <- group.predictors(des.mat, prior, gp.out$gs.mat, IN$bs.pi, cor.th=0.99, grp.pre='pred.group.bs.')
-      #IN$grouped.pred.bs[[prior.name]][[bootstrap]] <- gp.out.bs
-      if (length(gp.out.bs$pred.groups) > 0) {
-        cat('grouped predictors - subsample from prior again\n')
-        not.done <- TRUE
-      }
-    }
+
+    # Commenting the next block (never executed in known cases)
+    #while (not.done) {
+    #  not.done <- FALSE
+    #  
+    #  # set some of the prior interactions to zero
+    #  prior <- gp.out$prior.mat
+    #  to.zero <- setdiff(1:length(prior), sample(length(prior), replace=TRUE))
+    #  cat(sprintf('Setting %d non-zero prior edges to zero\n', sum(prior[to.zero] != 0)))
+    #  prior[to.zero] <- 0
+    #  
+    #  # estimate transcription factor activities
+    #  if(PARS$use.tfa) {
+    #    des.mat <- rbind(IN$final_design_matrix, group.expression(gp.out$pred.groups, IN$final_design_matrix))
+    #    IN$tf.activities.bs[[prior.name]][[bootstrap]] <- tfa(prior, des.mat, IN$final_response_matrix_halftau)
+    #  }
+    #  
+    #  des.mat <- IN$final_design_matrix[IN$tf.with.expr, ]
+    #  if(PARS$use.tfa) {
+    #      des.mat <- IN$tf.activities.bs[[prior.name]][[bootstrap]][gp.out$tf.names, ]
+    #  }
+    #  # group again? what if we group groups?
+    #  #cat("group predictors\n")
+    #  #gp.out.bs <- group.predictors(des.mat, prior, IN$gs.mat, IN$bs.pi, cor.th=0.99, grp.pre='pred.group.bs.')
+    #  gp.out.bs <- group.predictors(des.mat, prior, gp.out$gs.mat, IN$bs.pi, cor.th=0.99, grp.pre='pred.group.bs.')
+    #  #IN$grouped.pred.bs[[prior.name]][[bootstrap]] <- gp.out.bs
+    #  if (length(gp.out.bs$pred.groups) > 0) {
+    #    cat('grouped predictors - subsample from prior again\n')
+    #    not.done <- TRUE
+    #  }
+    #}
     
       
     # set the prior weights matrix
@@ -352,7 +353,10 @@ for (prior.name in names(IN$priors)) {
     #X <- IN$final_design_matrix[, IN$bs.pi[bootstrap, ]]
     X <- gp.out.bs$des.mat[, IN$bs.pi[bootstrap, ]]
     Y <- IN$final_response_matrix[, IN$bs.pi[bootstrap, ]]
-
+    write.table(as.matrix(X), 
+      paste(PARS$save.to.dir, "/X_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
+    write.table(as.matrix(Y), 
+      paste(PARS$save.to.dir, "/Y_", prior.name, "_", bootstrap, ".tsv", sep=""), sep = '\t')
     if (nrow(X) > 6000) {
       #X <- X[IN$tf.names, ]  # speeds up MI calculation for large datasets
       X <- X[gp.out.bs$tf.names, ]
