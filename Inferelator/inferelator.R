@@ -246,7 +246,7 @@ if(PARS$use.tfa) {
 
   IN$final_response_matrix_halftau <- des.res$final_response_matrix
 
-  write.table(as.matrix(des.res$final_response_matrix), 
+  write.table(as.matrix(des.res$final_response_matrix_halftau), 
     paste(PARS$save.to.dir, "/final_response_matrix_halftau.tsv", sep=""), sep = '\t')
 
   cat("done.\n")
@@ -454,6 +454,9 @@ for (prior.name in names(IN$priors)) {
   comb.confs <- Matrix((comb.confs - min(comb.confs)) / (PARS$num.boots * length(comb.confs) - min(comb.confs)))
   save(comb.confs, file=confs.file)
   
+  write.table(as.matrix(comb.confs),
+      paste(PARS$save.to.dir, "/cconf_", prior.name, ".tsv", sep=""), sep = '\t')
+
   if (PARS$output.summary) {
     sum.net(betas, betas.resc, comb.confs, IN, confs.file)
   }
